@@ -132,3 +132,52 @@ resource "aws_lambda_function" "strip_metadata" {
     }
   }
 }
+
+resource "aws_iam_user" "a" {
+  name = "user_a"
+}
+
+resource "aws_iam_user_policy" "rw_bucket_a" {
+  name = "rw_bucket_a"
+  user = aws_iam_user.a.name
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject"
+      ],
+      "Resource": ["arn:aws:s3:::gen-england-bucket-a/*"]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_user" "b" {
+  name = "user_b"
+}
+
+resource "aws_iam_user_policy" "rw_bucket_b" {
+  name = "rw_bucket_b"
+  user = aws_iam_user.b.name
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": ["arn:aws:s3:::gen-england-bucket-b/*"]
+    }
+  ]
+}
+EOF
+}
