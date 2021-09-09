@@ -1,0 +1,7 @@
+.venv
+.terraform
+*.tfstate
+*.backup
+*.zip
+*.hcl
+.DS_STORE
